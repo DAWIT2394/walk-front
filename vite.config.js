@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:6000', // Backend server
+        target: 'https://walk-talk-inspire-backend.onrender.com', // Backend server
         changeOrigin: true,
         secure: false,
       },
