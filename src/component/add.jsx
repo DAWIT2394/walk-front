@@ -23,7 +23,7 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/registrations", form);
+      await axios.post("https://walk-talk-inspire-backend.onrender.com/api/registrations", form);
       alert("Registration submitted!");
       setForm({
         fullName: "",

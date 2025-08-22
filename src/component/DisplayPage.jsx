@@ -21,7 +21,7 @@ function DisplayPage() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("/api/registrations");
+      const res = await axios.get("https://walk-talk-inspire-backend.onrender.com/api/registrations");
       setRegistrations(res.data);
     } catch (err) {
       console.error("Error fetching registrations:", err);
@@ -32,7 +32,7 @@ function DisplayPage() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/registrations/${id}`);
+      await axios.delete(`https://walk-talk-inspire-backend.onrender.com/api/registrations/${id}`);
       setRegistrations((prev) => prev.filter((reg) => reg._id !== id));
     } catch (err) {
       console.error("Error deleting registration:", err);
@@ -50,7 +50,7 @@ function DisplayPage() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`/api/registrations/${editingId}`, editForm);
+      await axios.put(`https://walk-talk-inspire-backend.onrender.com/api/registrations/${editingId}`, editForm);
       setRegistrations((prev) =>
         prev.map((reg) => (reg._id === editingId ? editForm : reg))
       );
