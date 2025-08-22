@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 function DisplayPage() {
   const [registrations, setRegistrations] = useState([]);
@@ -15,13 +8,16 @@ function DisplayPage() {
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
 
+  // Backend URL
+  const API_URL = "https://walk-talk-inspire-backend.onrender.com";
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("https://walk-talk-inspire-backend.onrender.com/api/registrations");
+      const res = await axios.get(`${API_URL}/api/registrations`);
       setRegistrations(res.data);
     } catch (err) {
       console.error("Error fetching registrations:", err);
@@ -32,7 +28,7 @@ function DisplayPage() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://walk-talk-inspire-backend.onrender.com/api/registrations/${id}`);
+      await axios.delete(`${API_URL}/api/registrations/${id}`);
       setRegistrations((prev) => prev.filter((reg) => reg._id !== id));
     } catch (err) {
       console.error("Error deleting registration:", err);
@@ -50,7 +46,7 @@ function DisplayPage() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`https://walk-talk-inspire-backend.onrender.com/api/registrations/${editingId}`, editForm);
+      await axios.put(`${API_URL}/api/registrations/${editingId}`, editForm);
       setRegistrations((prev) =>
         prev.map((reg) => (reg._id === editingId ? editForm : reg))
       );
@@ -60,7 +56,7 @@ function DisplayPage() {
     }
   };
 
-  // ====== Pie Chart Data ======
+  // Pie Chart Data
   const ageGroups = registrations.reduce((acc, reg) => {
     if (!reg.age) return acc;
     const age = parseInt(reg.age, 10);
@@ -77,24 +73,18 @@ function DisplayPage() {
     acc[group] = (acc[group] || 0) + 1;
     return acc;
   }, {});
-  const ageData = Object.entries(ageGroups).map(([name, value]) => ({
-    name,
-    value,
-  }));
+  const ageData = Object.entries(ageGroups).map(([name, value]) => ({ name, value }));
 
   const genderGroups = registrations.reduce((acc, reg) => {
     if (!reg.gender) return acc;
     acc[reg.gender] = (acc[reg.gender] || 0) + 1;
     return acc;
   }, {});
-  const genderData = Object.entries(genderGroups).map(([name, value]) => ({
-    name,
-    value,
-  }));
+  const genderData = Object.entries(genderGroups).map(([name, value]) => ({ name, value }));
 
   const COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
 
-  // ====== Styles ======
+  // Styles
   const styles = {
     container: {
       minHeight: "100vh",
@@ -107,9 +97,10 @@ function DisplayPage() {
       padding: "20px",
       borderRadius: "10px",
       boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-      maxWidth: "1000px",
       margin: "20px auto",
       overflowX: "auto",
+      width: "100%",
+      maxWidth: "1200px",
     },
     title: {
       textAlign: "center",
@@ -117,12 +108,14 @@ function DisplayPage() {
       color: "#333",
     },
     chartsContainer: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
+      display: "flex",
+      flexWrap: "wrap",
       gap: "20px",
+      justifyContent: "center",
       marginTop: "30px",
     },
     chartBox: {
+      flex: "1 1 300px",
       background: "#fff",
       padding: "20px",
       borderRadius: "10px",
@@ -187,100 +180,43 @@ function DisplayPage() {
                     {editingId === reg._id ? (
                       <>
                         <td style={styles.td}>
-                          <input
-                            type="text"
-                            name="fullName"
-                            value={editForm.fullName}
-                            onChange={handleChange}
-                          />
+                          <input type="text" name="fullName" value={editForm.fullName} onChange={handleChange} />
                         </td>
                         <td style={styles.td}>
-                          <input
-                            type="email"
-                            name="email"
-                            value={editForm.email}
-                            onChange={handleChange}
-                          />
+                          <input type="email" name="email" value={editForm.email} onChange={handleChange} />
                         </td>
                         <td style={styles.td}>
-                          <input
-                            type="text"
-                            name="phone"
-                            value={editForm.phone}
-                            onChange={handleChange}
-                          />
+                          <input type="text" name="phone" value={editForm.phone} onChange={handleChange} />
                         </td>
                         <td style={styles.td}>
-                          <input
-                            type="number"
-                            name="age"
-                            value={editForm.age}
-                            onChange={handleChange}
-                          />
+                          <input type="number" name="age" value={editForm.age} onChange={handleChange} />
                         </td>
                         <td style={styles.td}>
-                          <input
-                            type="text"
-                            name="gender"
-                            value={editForm.gender}
-                            onChange={handleChange}
-                          />
+                          <input type="text" name="gender" value={editForm.gender} onChange={handleChange} />
                         </td>
                         <td style={styles.td}>
-                          <input
-                            type="text"
-                            name="meetupArea"
-                            value={editForm.meetupArea}
-                            onChange={handleChange}
-                          />
+                          <input type="text" name="meetupArea" value={editForm.meetupArea} onChange={handleChange} />
                         </td>
                         <td style={styles.td}>
-                          <input
-                            type="text"
-                            name="message"
-                            value={editForm.message}
-                            onChange={handleChange}
-                          />
+                          <input type="text" name="message" value={editForm.message} onChange={handleChange} />
                         </td>
                         <td style={styles.td}>
-                          <button
-                            style={{ ...styles.button, ...styles.saveBtn }}
-                            onClick={handleUpdate}
-                          >
-                            Save
-                          </button>
-                          <button
-                            style={{ ...styles.button, ...styles.cancelBtn }}
-                            onClick={() => setEditingId(null)}
-                          >
-                            Cancel
-                          </button>
+                          <button style={{ ...styles.button, ...styles.saveBtn }} onClick={handleUpdate}>Save</button>
+                          <button style={{ ...styles.button, ...styles.cancelBtn }} onClick={() => setEditingId(null)}>Cancel</button>
                         </td>
                       </>
                     ) : (
                       <>
                         <td style={styles.td}>{reg.fullName}</td>
                         <td style={styles.td}>{reg.email}</td>
-                        <td style={styles.td}>
-                          <a href={`tel:${reg.phone}`}>{reg.phone}</a>
-                        </td>
+                        <td style={styles.td}><a href={`tel:${reg.phone}`}>{reg.phone}</a></td>
                         <td style={styles.td}>{reg.age}</td>
                         <td style={styles.td}>{reg.gender}</td>
                         <td style={styles.td}>{reg.meetupArea}</td>
                         <td style={styles.td}>{reg.message}</td>
                         <td style={styles.td}>
-                          <button
-                            style={{ ...styles.button, ...styles.editBtn }}
-                            onClick={() => handleEdit(reg)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            style={{ ...styles.button, ...styles.deleteBtn }}
-                            onClick={() => handleDelete(reg._id)}
-                          >
-                            Delete
-                          </button>
+                          <button style={{ ...styles.button, ...styles.editBtn }} onClick={() => handleEdit(reg)}>Edit</button>
+                          <button style={{ ...styles.button, ...styles.deleteBtn }} onClick={() => handleDelete(reg._id)}>Delete</button>
                         </td>
                       </>
                     )}
@@ -298,20 +234,13 @@ function DisplayPage() {
           <h3 style={{ textAlign: "center" }}>Age Distribution</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie
-                data={ageData}
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                dataKey="value"
-                label
-              >
+              <Pie data={ageData} cx="50%" cy="50%" outerRadius="80%" dataKey="value" label>
                 {ageData.map((_, i) => (
                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
+              <Legend layout="horizontal" verticalAlign="bottom" />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -320,20 +249,13 @@ function DisplayPage() {
           <h3 style={{ textAlign: "center" }}>Gender Distribution</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie
-                data={genderData}
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                dataKey="value"
-                label
-              >
+              <Pie data={genderData} cx="50%" cy="50%" outerRadius="80%" dataKey="value" label>
                 {genderData.map((_, i) => (
                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
+              <Legend layout="horizontal" verticalAlign="bottom" />
             </PieChart>
           </ResponsiveContainer>
         </div>
