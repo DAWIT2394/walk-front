@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { FaFacebook, FaTwitter, FaYoutube, FaTiktok } from "react-icons/fa"; // social icons
 
 // import local images
 import logo from "../assets/logo.jpg";
-// import background from "../assets/background.jpg";
 
 function Home() {
   const [form, setForm] = useState({
@@ -23,7 +23,10 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://walk-talk-inspire-backend.onrender.com/api/registrations", form);
+      await axios.post(
+        "https://walk-talk-inspire-backend.onrender.com/api/registrations",
+        form
+      );
       alert("Registration submitted!");
       setForm({
         fullName: "",
@@ -46,7 +49,7 @@ function Home() {
       justifyContent: "center",
       alignItems: "center",
       minHeight: "100vh",
-      backgroundImage: `url(${/* background */"https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"})`,
+      backgroundImage: `url(${"https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       fontFamily: "Arial, sans-serif",
@@ -85,6 +88,19 @@ function Home() {
       border: "none",
       borderRadius: "5px",
       cursor: "pointer",
+      marginTop: "10px",
+    },
+    socialContainer: {
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "15px",
+      gap: "15px",
+    },
+    icon: {
+      fontSize: "25px",
+      color: "#3B82F6",
+      cursor: "pointer",
+      transition: "0.3s",
     },
   };
 
@@ -92,7 +108,7 @@ function Home() {
     <div style={styles.container}>
       <form style={styles.card} onSubmit={handleSubmit}>
         <img src={logo} alt="Walk Talk Inspire Logo" style={styles.logo} />
-        <h2 style={styles.title}>Walk Talk Inspire </h2>
+        <h2 style={styles.title}>Walk Talk Inspire</h2>
 
         <input
           style={styles.input}
@@ -135,7 +151,6 @@ function Home() {
           <option value="">Select Gender</option>
           <option>Male</option>
           <option>Female</option>
-          {/* <option>Other</option> */}
         </select>
         <input
           style={styles.input}
@@ -154,6 +169,22 @@ function Home() {
         <button style={styles.button} type="submit">
           Submit
         </button>
+
+        {/* Social Media Icons */}
+        <div style={styles.socialContainer}>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+            <FaFacebook style={styles.icon} />
+          </a>
+          <a href="https://x.com/danhailuend?t=JmaU9ql-6vzwYipgbotSXA&s=09" target="_blank" rel="noopener noreferrer">
+            <FaTwitter style={styles.icon} />
+          </a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+            <FaYoutube style={styles.icon} />
+          </a>
+          <a href="https://www.tiktok.com/@danvision2?_t=ZM-8zBIAWhNhK9&_r=1" target="_blank" rel="noopener noreferrer">
+            <FaTiktok style={styles.icon} />
+          </a>
+        </div>
       </form>
     </div>
   );
