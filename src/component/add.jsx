@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FaFacebook, FaTwitter, FaYoutube, FaTiktok } from "react-icons/fa"; // social icons
+import { FaFacebook, FaTwitter, FaYoutube, FaTiktok, FaWhatsapp } from "react-icons/fa"; // added FaWhatsapp
 
 // import local images
 import logo from "../assets/logo.jpg";
@@ -183,6 +183,9 @@ function Home() {
           </a>
           <a href="https://www.tiktok.com/@danvision2?_t=ZM-8zBIAWhNhK9&_r=1" target="_blank" rel="noopener noreferrer">
             <FaTiktok style={styles.icon} />
+          </a>
+          <a href="https://chat.whatsapp.com/ETwKBlP37lO2oWOj7OiIkS?mode=ems_copy_t" target="_blank" rel="noopener noreferrer">
+            <FaWhatsapp style={{ ...styles.icon, color: "green" }} /> {/* WhatsApp icon in green */}
           </a>
         </div>
       </form>
